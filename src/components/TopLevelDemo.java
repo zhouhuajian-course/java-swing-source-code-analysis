@@ -19,6 +19,14 @@ public class TopLevelDemo {
 
         //Create the menu bar.  Make it have a green background.
         JMenuBar greenMenuBar = new JMenuBar();
+        // Opaque op不+aque水，不像水的，不透明的
+        // opaque
+        // adjective
+        // UK  /əʊˈpeɪk/ US  /oʊˈpeɪk/
+        // preventing light from travelling through, and therefore not transparent or translucent
+        // 不透明的；不透光的
+        // opaque glass/tights
+        // 不透明的玻璃／连裤袜
         greenMenuBar.setOpaque(true);
         greenMenuBar.setBackground(new Color(154, 165, 127));
         greenMenuBar.setPreferredSize(new Dimension(200, 20));

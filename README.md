@@ -142,3 +142,163 @@ public class JFrame  extends Frame implements WindowConstants, Accessible, RootP
 }
     
 ```
+
+## Swing Components 组件
+
+Swing 所有以“J”开头的组件，除了顶级容器，都继承自 JComponent
+
+JFrame和JDialog不是继承JComponent，因为他们要实现implement顶级容器
+
+JComponent 继承 Container， Container 继承 Component
+
+```
+java.lang.Object
+  java.awt.Component
+    java.awt.Container
+      javax.swing.JComponent
+```
+
+## 组件可见性
+
+顶级容器组件默认不可见，其他组件默认可见
+
+void setVisible(boolean)
+boolean isVisible()
+
+Set or get whether the component is visible. Components are initially visible, with the exception of top-level components.
+
+## Text Components 文本组件
+
+Swing 的文本组件都是继承自 JTextComponent
+
+![JTextComponet.hierarchy.png](resources/JTextComponet.hierarchy.png)
+
+## Swing Component Examples
+
+组件例子
+
+https://docs.oracle.com/javase/tutorial/uiswing/examples/components/index.html
+
+## JFrame ContentPane 
+
+JFrame的ContentPane是JPanel，默认使用BorderLayout
+
+constraints默认是BorderLayout.CENTER，也就是默认添加组件到中间区域
+
+```java
+public class JRootPane extends JComponent implements Accessible {
+    protected Container createContentPane() {
+        JComponent c = new JPanel();
+        c.setName(this.getName()+".contentPane");
+        c.setLayout(new BorderLayout() {
+            /* This BorderLayout subclass maps a null constraint to CENTER.
+             * Although the reference BorderLayout also does this, some VMs
+             * throw an IllegalArgumentException.
+             */
+            public void addLayoutComponent(Component comp, Object constraints) {
+                if (constraints == null) {
+                    constraints = BorderLayout.CENTER;
+                }
+                super.addLayoutComponent(comp, constraints);
+            }
+        });
+        return c;
+    }
+}
+   
+```
+
+## JApplet
+
+JApplet依赖浏览器来执行。
+
+很多浏览器都可以支持JApplet，包括了IE，Firefox等。
+
+Java 9 开始废弃
+
+## Swing 按钮 Buttons
+
+继承自 AbstractButton
+
+JMenuItem也是一种按钮
+
+|Class|Summary|
+|---|---|
+|JButton     	        |A common button.	|                 
+|JCheckBox	            |A check box button.|	                         
+|JRadioButton	        |One of a group of radio buttons.|	     
+|JMenuItem	            |An item in a menu.	|
+|JCheckBoxMenuItem	    |A menu item that has a check box.|	
+|JRadioButtonMenuItem	|A menu item that has a radio button.|	
+|JToggleButton	        |Implements toggle functionality inherited by JCheckBox and JRadioButton. Can be instantiated or subclassed to create two-state buttons.|
+
+
+## JFrame 屏幕居中
+
+frame.setLocationRelativeTo(null);
+
+## Swing 线程
+
+A Swing programmer deals with the following kinds of threads:
+
++ Initial threads, the threads that execute initial application code.
++ The event dispatch thread, where all event-handling code is executed. Most code that interacts with the Swing framework must also execute on this thread.
++ Worker threads, also known as background threads, where time-consuming background tasks are executed.
+
+Why does not the initial thread simply create the GUI itself? Because almost all code that creates or interacts with Swing components must run on the event dispatch thread. This restriction is discussed further in the next section.
+
+为什么不简单使用初始化线程开创建GUI，因为几乎所有创建和交互Swing组件的代码，必须运行在事件分发线程。
+
+## Swing 组件 MVC
+
+JTextComponent
++ A model, known as a document, that manages the component's content.
++ A view, which displays the component on screen.
++ A controller, known as an editor kit, that reads and writes text and implements editing capabilities with actions.
+
+## Swing 事件
+
++ 事件源    一般是组件或模型
++ 事件      由事件源创建，是一个对象，由事件信息，可以识别出事件源
++ 事件监听器 监听、处理事件
+
+Each event is represented by an object that gives information about the event and identifies the event source. Event sources are often components or models, but other kinds of objects can also be event sources.
+
+![event.png](resources/event.png)
+
+EventObject 所有 AWT Swing事件的父类
+
+事件分两类 
++ 低级事件 例如鼠标 键盘事件
++ 语义事件 例如Action Item事件
+
+```
+Concepts: Low-Level Events and Semantic Events
+Events can be divided into two groups: low-level events and semantic events. Low-level events represent window-system occurrences or low-level input. Everything else is a semantic event.
+
+Examples of low-level events include mouse and key events both of which result directly from user input. Examples of semantic events include action and item events. A semantic event might be triggered by user input; for example, a button customarily fires an action event when the user clicks it, and a text field fires an action event when the user presses Enter. However, some semantic events are not triggered by low-level events, at all. For example, a table-model event might be fired when a table model receives new data from a database.
+
+Whenever possible, you should listen for semantic events rather than low-level events. That way, you can make your code as robust and portable as possible. For example, listening for action events on buttons, rather than mouse events, means that the button will react appropriately when the user tries to activate the button using a keyboard alternative or a look-and-feel-specific gesture. When dealing with a compound component such as a combo box, it is imperative that you stick to semantic events, since you have no reliable way of registering listeners on all the look-and-feel-specific components that might be used to form the compound component.
+```
+
+## 事件适配器 Event Adapters
+
+某些Listener有多个方法，如果只想实现个别方法，可用适配器
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

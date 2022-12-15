@@ -10,7 +10,8 @@ public class TopLevelDemo2 {
         JFrame frame = new JFrame("TopLevelDemo");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        frame.add(new JLabel("Text"));
+        frame.add(new JLabel("Text"), BorderLayout.CENTER);
+        frame.setLocationRelativeTo(null);
 
         frame.pack();
         frame.setVisible(true);
